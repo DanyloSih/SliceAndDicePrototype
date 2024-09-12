@@ -1,5 +1,19 @@
 {
   "dependencies": {
+    "com.danpie.simple-bootstrap": {
+      "version": "https://github.com/DanyloSih/SimpleBootstrap.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "72314a194178bef129f9810705e7b89566cc7d57"
+    },
+    "com.danpie.simple-fsm": {
+      "version": "https://github.com/DanyloSih/SimpleFSM.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "d18a0d503857e34ab8c7a6a9789438b697dd6d1e"
+    },
     "com.unity.collab-proxy": {
       "version": "2.5.1",
       "depth": 0,
