@@ -2,22 +2,13 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 
 namespace SliceAndDicePrototype.DiceSystem
 {
     public class DieView : MonoBehaviour
     {
-        private static readonly Vector3[] s_sideNormals = new Vector3[]
-        {
-            Vector3.left,   
-            Vector3.right,  
-            Vector3.up,     
-            Vector3.down,   
-            Vector3.forward,
-            Vector3.back    
-        };
-
         [Header("Physics")]
         [SerializeField] private Collider _collider;
         [SerializeField] private Rigidbody _rigidbody;
@@ -33,27 +24,16 @@ namespace SliceAndDicePrototype.DiceSystem
         [SerializeField] private int _motionlessDetectionFramesCount = 10;
 
         [Header("Sides")]
-        [SerializeField] private DieSideView _sideLeft;
-        [SerializeField] private DieSideView _sideRight;
-        [SerializeField] private DieSideView _sideUp;
-        [SerializeField] private DieSideView _sideDown;
-        [SerializeField] private DieSideView _sideForward;
-        [SerializeField] private DieSideView _sideBack;
+        [SerializeField] private Sides<DieSideView> _dieSides;
+
         private bool _isThrowed;
 
-        /// <summary>
-        /// The order of the sides in <paramref name="diceSidesData"/> must 
-        /// match the order of the sides defined in <see cref="DieSide"/> enum.
-        /// </summary>
-        /// <param name="diceSidesData"></param>
-        public void Initialize(DiceSideData[] diceSidesData)
+        public void Initialize(Sides<DieSideData> dieSidesData)
         {
-            _sideLeft.Initialize(diceSidesData[(int)DieSide.Left]);
-            _sideRight.Initialize(diceSidesData[(int)DieSide.Right]);
-            _sideUp.Initialize(diceSidesData[(int)DieSide.Up]);
-            _sideDown.Initialize(diceSidesData[(int)DieSide.Down]);
-            _sideForward.Initialize(diceSidesData[(int)DieSide.Forward]);
-            _sideBack.Initialize(diceSidesData[(int)DieSide.Back]);
+            foreach (var sideWithData in _dieSides.GetSides())
+            {
+                sideWithData.Data.Initialize(dieSidesData.GetSide(sideWithData.Side));
+            }
         }
 
         /// <summary>
@@ -61,11 +41,16 @@ namespace SliceAndDicePrototype.DiceSystem
         /// </summary>
         /// <param name="force"></param>
         /// <returns>Top side of the dice after rolling process.</returns>
-        public async Task<DieSide> Roll(Vector3 forceVector, CancellationToken cancellationToken)
+        public async Task<Side> Roll(Vector3 forceVector, CancellationToken cancellationToken)
         {
             if (_isThrowed || !IsMotionless())
             {
-                throw new InvalidOperationException($"Rolling the dice again is not allowed while it's moving!");
+                throw new InvalidOperationException($"Rolling the die again is not allowed while it's moving!");
+            }
+
+            if (!IsPhysicsEnabled())
+            {
+                throw new InvalidOperationException($"Rolling the die is not allowed while physics disabled!");
             }
 
             _isThrowed = true;
@@ -78,36 +63,18 @@ namespace SliceAndDicePrototype.DiceSystem
 
             await UniTask.WaitForSeconds(
                 _motionlessCheckDelay, cancellationToken: cancellationToken, cancelImmediately: true);
-            if (cancellationToken.IsCancellationRequested)
-            {
-                _isThrowed = false;
-                throw new OperationCanceledException();
-            }
+            CheckCancellation(cancellationToken);
 
-            int motionlessFrames = 0;
-            while (motionlessFrames <= _motionlessDetectionFramesCount)
-            {
-                if(IsMotionless())
-                {
-                    motionlessFrames++;
-                }
-
-                await UniTask.WaitForEndOfFrame(this, cancellationToken, true);
-                if (cancellationToken.IsCancellationRequested)
-                {
-                    _isThrowed = false;
-                    throw new OperationCanceledException();
-                }
-            }
+            await WaitWhenBecomeMotionless(cancellationToken);
 
             _isThrowed = false;
-            return GetCurrentTopDiceSide();
+            return GetTopSide();
         }
 
         /// <summary>
         /// <inheritdoc cref="Roll(Vector3, CancellationToken)"/>
         /// </summary>
-        public async Task<DieSide> Roll(Vector3 forceVector)
+        public async Task<Side> Roll(Vector3 forceVector)
         {
             return await Roll(forceVector, destroyCancellationToken);
         }
@@ -115,6 +82,11 @@ namespace SliceAndDicePrototype.DiceSystem
         public bool IsMotionless()
         {
             return _rigidbody.velocity.magnitude <= _restingForceThreshold;
+        }
+
+        public bool IsPhysicsEnabled()
+        {
+            return _rigidbody.isKinematic == false && _collider.enabled;
         }
 
         public void DisablePhysics()
@@ -130,24 +102,49 @@ namespace SliceAndDicePrototype.DiceSystem
             _collider.enabled = true;
         }
 
-        private DieSide GetCurrentTopDiceSide()
+        public Side GetTopSide()
         {
             float maxDot = -Mathf.Infinity;
-            DieSide topSide = DieSide.Up;
+            Side topSide = Side.Up;
 
-            for (int i = 0; i < s_sideNormals.Length; i++)
+            foreach (var directionAndSide in SidesUtilities.SideNormals.GetSides())
             {
-                Vector3 worldNormal = transform.TransformDirection(s_sideNormals[i]);
+                Vector3 worldNormal = transform.TransformDirection(directionAndSide.Data);
                 float dotProduct = Vector3.Dot(worldNormal, Vector3.up);
 
                 if (dotProduct > maxDot)
                 {
                     maxDot = dotProduct;
-                    topSide = (DieSide)i;
+                    topSide = directionAndSide.Side;
                 }
+                
             }
 
             return topSide;
+        }
+
+        private void CheckCancellation(CancellationToken cancellationToken)
+        {
+            if (cancellationToken.IsCancellationRequested)
+            {
+                _isThrowed = false;
+                throw new OperationCanceledException();
+            }
+        }
+
+        private async Task WaitWhenBecomeMotionless(CancellationToken cancellationToken)
+        {
+            int motionlessFrames = 0;
+            while (motionlessFrames <= _motionlessDetectionFramesCount)
+            {
+                if (IsMotionless())
+                {
+                    motionlessFrames++;
+                }
+
+                await UniTask.WaitForEndOfFrame(this, cancellationToken, true);
+                CheckCancellation(cancellationToken);
+            }
         }
     }
 }

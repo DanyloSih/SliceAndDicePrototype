@@ -267,13 +267,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dieViewPrefab: {fileID: 2819971270734889873, guid: 2b05eb6dd1b4d0e489b0a81b92f9a1f4, type: 3}
   _minMaxLevel: {x: 1, y: 3}
-  _minMaxYForce: {x: 2000, y: 3000}
-  _testLeftTexture: {fileID: 2800000, guid: 3af315993efe731479e675f4dc02dca8, type: 3}
-  _testRightTexture: {fileID: 2800000, guid: c1a713ceeb543e545b652563d2f18112, type: 3}
-  _testUpTexture: {fileID: 2800000, guid: fac40f15b03a0b9448c47775f07c84c2, type: 3}
-  _testDownTexture: {fileID: 2800000, guid: b444bd76d7db60b47b4220f872a4dc68, type: 3}
-  _testForwardTexture: {fileID: 2800000, guid: cd4983d19003fb745b4d27786c7821d5, type: 3}
-  _testBackTexture: {fileID: 2800000, guid: 2990039f85ea58e43b89b25090bbd81e, type: 3}
+  _minMaxYForce: {x: 3000, y: 4000}
+  _testSidesTextures:
+    _leftSide: {fileID: 2800000, guid: 0a8758d460888784f98036ef9af6e374, type: 3}
+    _rightSide: {fileID: 2800000, guid: 41a41cc7b4ff65c4987f440d9b9bfdeb, type: 3}
+    _upSide: {fileID: 2800000, guid: 2b012bbe8ec3ef949a2e65da7bf1b6f0, type: 3}
+    _downSide: {fileID: 2800000, guid: deb5719d93dfb8e42a5395827623adbe, type: 3}
+    _forwardSide: {fileID: 2800000, guid: 2990039f85ea58e43b89b25090bbd81e, type: 3}
+    _backSide: {fileID: 2800000, guid: 9cd42345293c04f478e610a3357bdd71, type: 3}
 --- !u!1 &384460904
 GameObject:
   m_ObjectHideFlags: 0

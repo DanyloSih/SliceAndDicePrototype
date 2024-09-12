@@ -10,7 +10,7 @@ namespace SliceAndDicePrototype.DiceSystem
 
         private Material _iconMaterial;
 
-        public void Initialize(DiceSideData diceSideData)
+        public void Initialize(DieSideData diceSideData)
         {
             _iconMaterial = _iconMaterialRenderer.material;
             _iconMaterial.SetTexture("_MainTex", diceSideData.Icon);

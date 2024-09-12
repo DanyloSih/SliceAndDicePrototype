@@ -105,12 +105,13 @@ MonoBehaviour:
   _restingForceThreshold: 0.005
   _motionlessCheckDelay: 0.5
   _motionlessDetectionFramesCount: 20
-  _sideLeft: {fileID: 5275522014809014455}
-  _sideRight: {fileID: 6310671256224337440}
-  _sideUp: {fileID: 9042024915207911827}
-  _sideDown: {fileID: 8658696180796913748}
-  _sideForward: {fileID: 2599496286527392858}
-  _sideBack: {fileID: 6443759345718786158}
+  _dieSides:
+    _leftSide: {fileID: 5275522014809014455}
+    _rightSide: {fileID: 6310671256224337440}
+    _upSide: {fileID: 9042024915207911827}
+    _downSide: {fileID: 8658696180796913748}
+    _forwardSide: {fileID: 2599496286527392858}
+    _backSide: {fileID: 6443759345718786158}
 --- !u!1001 &32093706729778259
 PrefabInstance:
   m_ObjectHideFlags: 0

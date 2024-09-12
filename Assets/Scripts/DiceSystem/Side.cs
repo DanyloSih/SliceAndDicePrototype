@@ -1,6 +1,6 @@
 ﻿namespace SliceAndDicePrototype.DiceSystem
 {
-    public enum DieSide
+    public enum Side
     {
         Left = 0,
         Right = 1,
