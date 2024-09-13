@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace SliceAndDicePrototype.Utilities
 {
-    public class UIUtilities : MonoBehaviour
+    public static class UIUtilities
     {
         public static void RefreshUI(GameObject uiElement)
         {

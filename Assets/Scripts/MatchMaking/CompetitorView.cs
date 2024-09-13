@@ -21,7 +21,7 @@ namespace SliceAndDicePrototype.MatchMaking
 
         public List<UIDieView> DiceViews { get => _diceViews; }
 
-        public void Initialize(Sprite icon, string name, List<UIDieView> diceViews)
+        public async void Initialize(Sprite icon, string name, List<UIDieView> diceViews)
         {
             _competitorIcon.sprite = icon;
             _competitorNameText.text = name;
@@ -43,6 +43,7 @@ namespace SliceAndDicePrototype.MatchMaking
                 diceView.ResetIconScale();
             }
 
+            await UniTask.WaitForFixedUpdate(cancellationToken: destroyCancellationToken);
             UIUtilities.RefreshUI(gameObject);
         }
 
