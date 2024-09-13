@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c93caa5cf61978f429898abbd0a7465c, type: 3}
+  m_Name: HealDieProvider
+  m_EditorClassIdentifier: 
+  _dieSides:
+    _leftSide: {fileID: 11400000, guid: 99bbe97ba175b294b8f533b3533e5dfd, type: 2}
+    _rightSide: {fileID: 11400000, guid: 99bbe97ba175b294b8f533b3533e5dfd, type: 2}
+    _upSide: {fileID: 11400000, guid: 433e8f5fb3936024ba8e557c5f50a98a, type: 2}
+    _downSide: {fileID: 11400000, guid: 433e8f5fb3936024ba8e557c5f50a98a, type: 2}
+    _forwardSide: {fileID: 11400000, guid: 4f0e0a01d8504744c963da1c5ad2a763, type: 2}
+    _backSide: {fileID: 11400000, guid: 5615e739eb1230b409380669523b95f5, type: 2}
+  _activeSide: 2

@@ -1,55 +1,60 @@
-using System;
 using System.Collections.Generic;
-using NaughtyAttributes;
 using SliceAndDicePrototype.DiceSystem;
 using UnityEngine;
 
 namespace SliceAndDicePrototype.MatchMaking
 {
-    public class Match : IRoundProvider
-    {
-        private Competitor _firstCompetitor;
-        private Competitor _secondCompetitor;
-        private CompetitorBehaviour _firstCompetitorBehaviour;
-        private CompetitorBehaviour _secondCompetitorBehaviour;
-
-        public int Round { get; }
-
-        public Match(
-            Competitor firstCompetitor,
-            CompetitorBehaviour firstCompetitorBehaviour,
-            Competitor secondCompetitor,
-            CompetitorBehaviour secondCompetitorBehaviour)
-        {
-            _firstCompetitor = firstCompetitor;
-            _firstCompetitorBehaviour = firstCompetitorBehaviour;
-            _secondCompetitor = secondCompetitor;
-            _secondCompetitorBehaviour = secondCompetitorBehaviour;
-        }
-
-        
-    }
-
-    [Serializable]
     public class Competitor
     {
-        [SerializeField] private string _name;
-        [SerializeField] private Texture _icon;
-        [SerializeField] private List<Die> _dice;
-        [SerializeField] private int _maxHealth = 10;
-        [ShowNonSerializedField] private int _health = 10;
+        private string _name;
+        private Sprite _icon;
+        private List<Die> _dice;
+        private int _maxHealth = 10;
+        private int _health = 10;
+        private int _armor = 0;
 
-        public int Health { get => _health; set => Mathf.Clamp(value, 0, _maxHealth); }
+        public int Health { get => _health; }
+        public int MaxHealth { get => _maxHealth; }
         public List<Die> Dice { get => _dice; }
-        public Texture Icon { get => _icon; }
+        public Sprite Icon { get => _icon; }
         public string Name { get => _name; }
+        public int Armor { get => _armor; }
 
-        public Competitor(string name, Texture icon, List<Die> dice, int maxHealth)
+        public Competitor(string name, Sprite icon, List<Die> dice, int maxHealth, int initialHealth, int initialArmor)
         {
             _name = name;
             _icon = icon;
             _dice = dice;
             _maxHealth = maxHealth;
+            _health = initialHealth;
+            _armor = initialArmor;
+        }
+
+        public void AddHealth(int health)
+        {
+            _health = Mathf.Clamp(_health + Mathf.Max(health, 0), 0, _maxHealth);
+        }
+
+        public void AddArmor(int armor)
+        {
+            _armor = Mathf.Max(_armor + Mathf.Max(armor, 0), 0);
+        }
+
+        public void DealDamage(int damage)
+        {
+            HitHealth(HitArmor(Mathf.Max(damage, 0)));
+        }
+
+        public void HitHealth(int damage)
+        {
+            _health = Mathf.Max(_health - damage, 0);
+        }
+
+        public int HitArmor(int damage)
+        {
+            int reminder = Mathf.Max(damage - _armor, 0);
+            _armor = Mathf.Max(_armor - damage, 0);
+            return reminder;
         }
     }
 }

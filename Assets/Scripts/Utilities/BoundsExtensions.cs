@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace SliceAndDicePrototype.DiceSystem
+namespace SliceAndDicePrototype.Utilities
 {
-    public static class BoundsExtension
+    public static class BoundsExtensions
     {
         public static Vector3 GetRandomPointInside(this Bounds bounds)
         {

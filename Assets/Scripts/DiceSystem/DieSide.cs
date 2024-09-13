@@ -8,7 +8,7 @@ namespace SliceAndDicePrototype.DiceSystem
         [Min(1)]
         [SerializeField] private int _level;
 
-        protected int Level { get => _level; }
+        public int Level { get => _level; }
 
         public abstract void UseAbility();
 

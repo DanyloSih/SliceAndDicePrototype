@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c93caa5cf61978f429898abbd0a7465c, type: 3}
+  m_Name: Enemy1DieProvider
+  m_EditorClassIdentifier: 
+  _dieSides:
+    _leftSide: {fileID: 11400000, guid: 0741e10af69023949ad50909f2436e2d, type: 2}
+    _rightSide: {fileID: 11400000, guid: 0741e10af69023949ad50909f2436e2d, type: 2}
+    _upSide: {fileID: 11400000, guid: 949071eb933909d43ab165f6ba165af9, type: 2}
+    _downSide: {fileID: 11400000, guid: 949071eb933909d43ab165f6ba165af9, type: 2}
+    _forwardSide: {fileID: 11400000, guid: 5615e739eb1230b409380669523b95f5, type: 2}
+    _backSide: {fileID: 11400000, guid: 5615e739eb1230b409380669523b95f5, type: 2}
+  _activeSide: 2

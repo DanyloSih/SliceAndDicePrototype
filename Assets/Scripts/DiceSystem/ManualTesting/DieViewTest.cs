@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SliceAndDicePrototype.DiceSystem.ManualTesting
 {
-	public class DieViewTest : MonoBehaviour
+    public class DieViewTest : MonoBehaviour
 	{
 		[SerializeField] private DieView _dieViewPrefab;
 		[Tooltip("min - Inclusive, max - Inclusive"), Min(1)]

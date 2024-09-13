@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
-using NaughtyAttributes;
+using Cysharp.Threading.Tasks;
+using SliceAndDicePrototype.DiceSystem;
+using SliceAndDicePrototype.Utilities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,17 +10,22 @@ namespace SliceAndDicePrototype.MatchMaking
 {
     public class CompetitorView : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI _competitorName;
-        [SerializeField] private TextMeshProUGUI _healthText;
-        [SerializeField] private TextMeshProUGUI _armorText;
-        [SerializeField] private Slider _healthBar;
+        [SerializeField] private Image _competitorIcon;
+        [SerializeField] private TextMeshProUGUI _competitorNameText;
+        [SerializeField] private TextMeshProUGUI _armorText; 
         [SerializeField] private RectTransform _diceViewsContainer;
-        [ShowNonSerializedField] private List<UIDieView> _diceViews;
+        [SerializeField] private SliderWithTextView _healthView;
+        [SerializeField] private List<UIDieView> _diceViews;
+
+        private Canvas _canvas;
 
         public List<UIDieView> DiceViews { get => _diceViews; }
 
-        public void SetNewDiceViews(List<UIDieView> diceViews)
+        public void Initialize(Sprite icon, string name, List<UIDieView> diceViews)
         {
+            _competitorIcon.sprite = icon;
+            _competitorNameText.text = name;
+
             for (int i = 0; i < _diceViewsContainer.childCount; i++)
             {
                 var destroyingDie = _diceViewsContainer.GetChild(i).GetComponent<UIDieView>();
@@ -32,19 +39,16 @@ namespace SliceAndDicePrototype.MatchMaking
 
             foreach (var diceView in diceViews)
             {
-                _diceViewsContainer.parent = diceView.transform;
+                diceView.transform.SetParent(_diceViewsContainer);
+                diceView.ResetIconScale();
             }
+
+            UIUtilities.RefreshUI(gameObject);
         }
 
-        public void SetMaxHealth(float maxHealth)
+        public void SetHealth(int health, int maxHealth)
         {
-            _healthBar.maxValue = maxHealth;
-        }
-
-        public void SetHealth(int health)
-        {
-            _healthText.text = health.ToString();
-            _healthBar.value = health;
+            _healthView.Initialize(health, maxHealth);
         }
 
         public void SetArmor(int armor)

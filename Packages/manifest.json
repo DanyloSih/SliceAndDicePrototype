@@ -3,6 +3,7 @@
     "com.danpie.simple-bootstrap": "https://github.com/DanyloSih/SimpleBootstrap.git",
     "com.danpie.simple-fsm": "https://github.com/DanyloSih/SimpleFSM.git",
     "com.dbrizov.naughtyattributes": "https://github.com/dbrizov/NaughtyAttributes.git#upm",
+    "com.unity.2d.sprite": "1.0.0",
     "com.unity.collab-proxy": "2.5.1",
     "com.unity.feature.development": "1.0.1",
     "com.unity.textmeshpro": "3.0.6",

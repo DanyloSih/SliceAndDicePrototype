@@ -1,29 +1,37 @@
 ﻿using DG.Tweening;
 using NaughtyAttributes;
-using SliceAndDicePrototype.DiceSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SliceAndDicePrototype.MatchMaking
+namespace SliceAndDicePrototype.DiceSystem
 {
     public class UIDieView : MonoBehaviour
     {
         private static readonly Vector3 s_hideIconSize;
         private Tween _hidingTween;
         private Tween _showingTween;
+        private RectTransform _rectTransform;
 
         [SerializeField] private Image _iconImage;
         [SerializeField] private Image _selectionImage;
         [SerializeField] private TextMeshProUGUI _levelText;
-        [SerializeField] private Vector3 _initialIconScale;
+        [SerializeField] private Vector3 _initialIconScale = Vector3.one;
         [SerializeField] private float _hideIconDuration = 1f;
         [SerializeField] private float _showIconDuration = 1f;
 
         public void Initialize(DieSideData dieSideData)
         {
+            _rectTransform = GetComponent<RectTransform>();
             _iconImage.sprite = dieSideData.IconSprite;
             _levelText.text = dieSideData.Level.ToString();
+            ResetIconScale();
+        }
+
+        [Button]
+        public void ResetIconScale()
+        {
+            _rectTransform.localScale = _initialIconScale;
             _iconImage.rectTransform.localScale = _initialIconScale;
         }
 

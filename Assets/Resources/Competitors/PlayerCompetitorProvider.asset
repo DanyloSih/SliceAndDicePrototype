@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa171e41e4e0acb42b5fb29d0c3194dd, type: 3}
+  m_Name: PlayerCompetitorProvider
+  m_EditorClassIdentifier: 
+  _name: Mighty warrior
+  _icon: {fileID: 21300000, guid: 177ae0a0aa3d7de45ad198f7e3a40b5c, type: 3}
+  _diceProviders:
+  - {fileID: 11400000, guid: 3cb80257feb90b048b16b34f30263f09, type: 2}
+  - {fileID: 11400000, guid: fc4fd96b17426f448b200b9458f0e036, type: 2}
+  - {fileID: 11400000, guid: 6af86548d1395cc458d1e4e5a85fa6e7, type: 2}
+  - {fileID: 11400000, guid: 4afc032cbde8a6e438dea12b4cc68eb3, type: 2}
+  - {fileID: 11400000, guid: c65e5e4134b756845a730ca62d1d8a5b, type: 2}
+  _maxHealth: 20
+  _initialHealth: 20
+  _competitorBehaviour: {fileID: 11400000, guid: 3286b14deadd63c4090fa7fea63465c4, type: 2}

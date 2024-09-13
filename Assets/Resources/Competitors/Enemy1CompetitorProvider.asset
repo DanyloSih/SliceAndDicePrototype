@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa171e41e4e0acb42b5fb29d0c3194dd, type: 3}
+  m_Name: Enemy1CompetitorProvider
+  m_EditorClassIdentifier: 
+  _name: Creepy bat
+  _icon: {fileID: 21300000, guid: 2ccc60a9d681c5940987eacc3db0fa3a, type: 3}
+  _diceProviders:
+  - {fileID: 11400000, guid: 35c0fac7ffa782c4bbdc783a1405c687, type: 2}
+  _maxHealth: 7
+  _initialHealth: 7
+  _competitorBehaviour: {fileID: 11400000, guid: 3286b14deadd63c4090fa7fea63465c4, type: 2}

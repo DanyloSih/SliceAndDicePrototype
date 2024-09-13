@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
+using SliceAndDicePrototype.Utilities;
 using UnityEngine;
 
 namespace SliceAndDicePrototype.DiceSystem
@@ -91,8 +91,11 @@ namespace SliceAndDicePrototype.DiceSystem
 
         public void DisablePhysics()
         {
+            if (!_rigidbody.isKinematic)
+            {
+                _rigidbody.velocity = Vector3.zero;
+            }
             _rigidbody.isKinematic = true;
-            _rigidbody.velocity = Vector3.zero;
             _collider.enabled = false;
         }
 
@@ -142,7 +145,10 @@ namespace SliceAndDicePrototype.DiceSystem
                     motionlessFrames++;
                 }
 
-                await UniTask.WaitForEndOfFrame(this, cancellationToken, true);
+                if (gameObject.activeInHierarchy)
+                {
+                    await UniTask.WaitForEndOfFrame(this, cancellationToken, true);
+                }
                 CheckCancellation(cancellationToken);
             }
         }
